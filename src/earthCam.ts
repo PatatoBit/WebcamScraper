@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 import { setTimeout } from "node:timers/promises";
 
 import puppeteer, { ElementHandle, Page } from "puppeteer";
-import { getFormattedDateTime } from "./utils.js";
+import { fetchAQIData, getFormattedDateTime } from "./utils.js";
 import { LiveCam } from "./index.js";
 
 // Polyfill __dirname
@@ -40,6 +40,8 @@ export async function captureScreenshots(urls: LiveCam[]) {
 
       // Prepare folder and filename
       const { date, time } = getFormattedDateTime();
+      const aqi = await fetchAQIData(webcam.lat, webcam.lng);
+
       const outputDir = path.join(
         __dirname,
         "..",
@@ -49,7 +51,7 @@ export async function captureScreenshots(urls: LiveCam[]) {
       );
       fs.mkdirSync(outputDir, { recursive: true });
 
-      const filePath = path.join(outputDir, `${time}_${webcam.name}.png`);
+      const filePath = path.join(outputDir, `AQI${aqi}_${time}.png`);
 
       // Take the screenshot
       // Locate the video element
