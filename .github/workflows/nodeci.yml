@@ -17,18 +17,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js 16.x
-      uses: actions/setup-node@v2
-      with:
-        node-version: 16.x
-        cache: 'yarn'
+      - uses: actions/checkout@v2
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.x
+          cache: "yarn"
 
-    - name: Install Dependencies 📦
-      run: yarn && yarn global add typescript ts-node
+      - name: Install Dependencies 📦
+        run: yarn && yarn global add typescript ts-node
 
-    - name: Build 🔨
-      run: yarn run build
+      - name: Build 🔨
+        run: yarn run build
 
-    - name: Start
-      run: yarn start
+      - name: Start
+        run: yarn start
