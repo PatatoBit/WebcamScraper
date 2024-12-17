@@ -11,14 +11,32 @@ export const getFormattedDateTime = () => {
 configDotenv();
 
 export async function fetchAQIData(lat: number, lng: number) {
-  const response = await fetch(
-    `https://api.waqi.info/feed/geo:${lat};${lng}/?token=${process.env.AQI_API_KEY}`
-  );
-  const data = await response.json();
+  try {
+    const apiKey = process.env.AQI_API_KEY;
 
-  if (!data || !data.data) {
-    throw new Error("Failed to fetch AQI data");
+    if (!apiKey) {
+      throw new Error("AQI_API_KEY is missing in the environment variables.");
+    }
+
+    const response = await fetch(
+      `https://api.waqi.info/feed/geo:${lat};${lng}/?token=${apiKey}`
+    );
+
+    if (!response.ok) {
+      throw new Error(
+        `Failed to fetch AQI data: ${response.status} ${response.statusText}`
+      );
+    }
+
+    const data = await response.json();
+
+    if (!data || !data.data || data.data.aqi === undefined) {
+      throw new Error("Invalid AQI response data.");
+    }
+
+    return data.data.aqi;
+  } catch (error) {
+    console.error("Error fetching AQI data:", error.message);
+    return null; // or handle it as needed, e.g., throw error
   }
-
-  return await data.data.aqi;
 }
