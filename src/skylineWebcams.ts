@@ -78,7 +78,7 @@ export async function captureSkylineWebcams(urls: LiveCam[]) {
 
       const filePath = path.join(
         outputDir,
-        `AQI${aqi}_${dayOrNight}_${localTime}_${weatherCondition}.png`
+        `${localTime}_${dayOrNight}_AQI${aqi}_${weatherCondition}.png`
       );
 
       console.log("AQI: ", aqi);
