@@ -68,3 +68,22 @@ export async function getLocalTimeAndDayOrNight(
 
   return { localTime: currentTime, isDay };
 }
+
+export async function getWeatherCondition(
+  lat: number,
+  lng: number
+): Promise<string> {
+  const apiKey = process.env.WEATHER_API_KEY;
+
+  const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${apiKey}`;
+  const response = await fetch(url);
+  const data = await response.json();
+
+  if (!data.weather || data.weather.length === 0) {
+    throw new Error("Failed to retrieve weather data");
+  }
+
+  // Extract the weather description
+  const condition = data.weather[0].main; // e.g., "hazy", "cloudy", "foggy"
+  return condition;
+}
