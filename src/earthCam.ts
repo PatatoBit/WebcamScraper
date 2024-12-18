@@ -8,6 +8,7 @@ import {
   fetchAQIData,
   getFormattedDateTime,
   getLocalTimeAndDayOrNight,
+  getWeatherCondition,
 } from "./utils.js";
 import { LiveCam } from "./index.js";
 
@@ -16,7 +17,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Function to capture screenshots
-export async function captureScreenshots(urls: LiveCam[]) {
+export async function captureEarthcams(urls: LiveCam[]) {
   const browser = await puppeteer.launch({
     headless: true, // Set to false to observe in real-time
     defaultViewport: { width: 1920, height: 1080 },
@@ -25,6 +26,7 @@ export async function captureScreenshots(urls: LiveCam[]) {
 
   try {
     for (const webcam of urls) {
+      console.log("====================================");
       console.log(`Capturing: ${webcam.name} (${webcam.url})`);
 
       // Navigate to the webcam URL
@@ -52,6 +54,11 @@ export async function captureScreenshots(urls: LiveCam[]) {
         "patato"
       );
 
+      const weatherCondition = await getWeatherCondition(
+        webcam.lat,
+        webcam.lng
+      );
+
       const dayOrNight = isDay ? "day" : "night";
 
       const outputDir = path.join(
@@ -65,8 +72,13 @@ export async function captureScreenshots(urls: LiveCam[]) {
 
       const filePath = path.join(
         outputDir,
-        `AQI${aqi}_${dayOrNight}_${localTime}.png`
+        `AQI${aqi}_${dayOrNight}_${localTime}_${weatherCondition}.png`
       );
+
+      console.log("AQI: ", aqi);
+      console.log("Day or Night: ", dayOrNight);
+      console.log("Local Time: ", localTime);
+      console.log("Weather Condition: ", weatherCondition);
 
       // Take the screenshot
       // Locate the video element
@@ -79,6 +91,8 @@ export async function captureScreenshots(urls: LiveCam[]) {
       });
 
       console.log(`Screenshot saved: ${filePath}`);
+      console.log("====================================");
+      console.log();
     }
   } catch (error) {
     console.error("Error capturing screenshots:", error);

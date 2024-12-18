@@ -1,4 +1,4 @@
-import { captureScreenshots } from "./earthCam.js";
+import { captureEarthcams } from "./earthCam.js";
 
 export interface LiveCam {
   name: string;
@@ -40,4 +40,4 @@ export const liveCamURLs: LiveCam[] = [
   },
 ];
 
-await captureScreenshots(liveCamURLs);
+await captureEarthcams(liveCamURLs);
