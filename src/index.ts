@@ -48,6 +48,36 @@ const SkylineWebcamsURLs: LiveCam[] = [
     lat: 31.233710649810327,
     lng: 121.50556972023557,
   },
+  {
+    name: "Qingdao, China",
+    url: "https://www.skylinewebcams.com/en/webcam/china/shandong/qingdao/qingdao.html",
+    lat: 36.086179614408685,
+    lng: 120.45848822854049,
+  },
+  {
+    name: "Lamai, Koh Samui, Thailand",
+    url: "https://www.skylinewebcams.com/en/webcam/thailand/surat-thani/ko-samui/lamai.html",
+    lat: 9.45751428315116,
+    lng: 100.03869361108009,
+  },
+  {
+    name: "Etna Volcano, Sicily, Italy",
+    url: "https://www.skylinewebcams.com/en/webcam/italia/sicilia/catania/vulcano-etna-sud.html",
+    lat: 37.750922933402066,
+    lng: 14.993458514277867,
+  },
+  {
+    name: "Senado Square - Macau",
+    url: "https://www.skylinewebcams.com/en/webcam/china/macao/se/senado-square.html",
+    lat: 22.19351100583924,
+    lng: 113.53973025264739,
+  },
+  {
+    name: "El nido, Palawan, Philippines",
+    url: "https://www.skylinewebcams.com/en/webcam/philippines/mimaropa/palawan/el-nido.html",
+    lat: 11.181150970673162,
+    lng: 119.39032911875917,
+  },
 ];
 
 await captureEarthcams(EarthCamURLs);
