@@ -46,15 +46,6 @@ export async function captureSkylineWebcams(urls: LiveCam[]) {
       });
       await page.click("video");
 
-      const isPlaying = await page.evaluate(() => {
-        const video = document.querySelector("video");
-        return video && !video.paused && !video.ended && video.readyState > 2;
-      });
-
-      if (!isPlaying) {
-        console.error("Video is not playing. Check CORS or network issues.");
-      }
-
       // Wait for the video to stabilize
       await setTimeout(20 * 1000);
 

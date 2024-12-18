@@ -66,12 +66,7 @@ const SkylineWebcamsURLs: LiveCam[] = [
     lat: 37.750922933402066,
     lng: 14.993458514277867,
   },
-  {
-    name: "Senado Square - Macau",
-    url: "https://www.skylinewebcams.com/en/webcam/china/macao/se/senado-square.html",
-    lat: 22.19351100583924,
-    lng: 113.53973025264739,
-  },
+
   {
     name: "El nido, Palawan, Philippines",
     url: "https://www.skylinewebcams.com/en/webcam/philippines/mimaropa/palawan/el-nido.html",
