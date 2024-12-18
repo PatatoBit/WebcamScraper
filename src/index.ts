@@ -1,4 +1,5 @@
 import { captureEarthcams } from "./earthCam.js";
+import { captureSkylineWebcams } from "./skylineWebcams.js";
 
 export interface LiveCam {
   name: string;
@@ -7,7 +8,7 @@ export interface LiveCam {
   lng: number;
 }
 
-export const liveCamURLs: LiveCam[] = [
+export const EarthCamURLs: LiveCam[] = [
   {
     name: "Dallas, Texas",
     url: "https://www.earthcam.com/usa/texas/dallas/reuniontower/?cam=reuniontower",
@@ -40,4 +41,14 @@ export const liveCamURLs: LiveCam[] = [
   },
 ];
 
-await captureEarthcams(liveCamURLs);
+const SkylineWebcamsURLs: LiveCam[] = [
+  {
+    name: "Shanghai Tower, Shanghai",
+    url: "https://www.skylinewebcams.com/en/webcam/china/shanghai/shanghai/skyline-of-shanghai.html",
+    lat: 31.233710649810327,
+    lng: 121.50556972023557,
+  },
+];
+
+await captureEarthcams(EarthCamURLs);
+await captureSkylineWebcams(SkylineWebcamsURLs);
