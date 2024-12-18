@@ -40,3 +40,32 @@ export async function fetchAQIData(lat: number, lng: number) {
     return null; // or handle it as needed, e.g., throw error
   }
 }
+
+export async function getLocalTimeAndDayOrNight(
+  lat: number,
+  lng: number,
+  username: string
+): Promise<{ localTime: string; isDay: boolean }> {
+  const url = `http://api.geonames.org/timezoneJSON?lat=${lat}&lng=${lng}&username=${username}`;
+  const response = await fetch(url);
+  const data = await response.json();
+
+  if (!data.time || !data.sunrise || !data.sunset) {
+    throw new Error(
+      "Failed to retrieve local time or sunrise/sunset data from GeoNames API"
+    );
+  }
+
+  // Parse the local time, sunrise, and sunset
+  const localTime = new Date(data.time);
+  const sunrise = new Date(data.sunrise);
+  const sunset = new Date(data.sunset);
+
+  // Determine if it's day or night
+  const isDay = localTime >= sunrise && localTime < sunset;
+
+  // Extract time only in hh-mm format
+  const timeOnly = localTime.toISOString().substring(11, 16).replace(":", "-");
+
+  return { localTime: timeOnly, isDay };
+}
