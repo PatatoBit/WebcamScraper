@@ -61,11 +61,10 @@ export async function getLocalTimeAndDayOrNight(
   const sunrise = new Date(data.sunrise);
   const sunset = new Date(data.sunset);
 
+  const currentTime = data.time.split(" ")[1].replace(":", "-");
+
   // Determine if it's day or night
   const isDay = localTime >= sunrise && localTime < sunset;
 
-  // Extract time only in hh-mm format
-  const timeOnly = localTime.toISOString().substring(11, 16).replace(":", "-");
-
-  return { localTime: timeOnly, isDay };
+  return { localTime: currentTime, isDay };
 }
