@@ -15,10 +15,10 @@ export const liveCamURLs: LiveCam[] = [
     url: "https://www.earthcam.com/usa/texas/dallas/reuniontower/?cam=reuniontower",
   },
   {
-    name: "Lockley Park - Plainfieldm, Illinois",
-    lat: 41.612508,
-    lng: -88.202189,
-    url: "https://myearthcam.com/lockleypark",
+    name: "Bourbon Street - New Orleans, Louisiana",
+    lat: 29.954683,
+    lng: -90.069125,
+    url: "https://www.earthcam.com/usa/louisiana/neworleans/bourbonstreet/?cam=bourbonstreet",
   },
   {
     name: "Copacabana South - Rio de Janeiro, Brazil",
