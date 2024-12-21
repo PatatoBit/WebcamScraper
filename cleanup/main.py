@@ -15,9 +15,12 @@ aqi_categories = {
 
 # Source and destination folders
 source_folder = "screenshots"
-cleaned_folder = "cleanshots"
+cleaned_folder = "cleanshot"
 train_folder = os.path.join(cleaned_folder, "train")
 test_folder = os.path.join(cleaned_folder, "test")
+
+# Maximum number of days to keep
+days_to_keep = 3
 
 # Helper function to determine AQI category
 def get_aqi_category(aqi):
@@ -30,6 +33,12 @@ def get_aqi_category(aqi):
 for folder in [train_folder, test_folder]:
     for category in aqi_categories.keys():
         os.makedirs(os.path.join(folder, category), exist_ok=True)
+
+# Remove old screenshot folders
+def cleanup_old_folders():
+    date_folders = sorted([d for d in os.listdir(source_folder) if os.path.isdir(os.path.join(source_folder, d))], reverse=True)
+    for old_folder in date_folders[days_to_keep:]:
+        shutil.rmtree(os.path.join(source_folder, old_folder))
 
 # Gather all images and their metadata
 images = []
@@ -75,8 +84,9 @@ def process_and_save_images(image_list, destination_folder):
             new_name = f"{os.path.splitext(image_name)[0]}_{webcam_folder.replace(' ', '_')}.jpg"
             save_path = os.path.join(destination_folder, category, new_name)
 
-            # Save the processed image
-            cv2.imwrite(save_path, img_resized)
+            # Skip saving if the image already exists
+            if not os.path.exists(save_path):
+                cv2.imwrite(save_path, img_resized)
         except Exception as e:
             print(f"Error processing {image_path}: {e}")
 
@@ -84,4 +94,7 @@ def process_and_save_images(image_list, destination_folder):
 process_and_save_images(train_images, train_folder)
 process_and_save_images(test_images, test_folder)
 
-print("Image processing and organization complete.")
+# Cleanup old screenshot folders
+cleanup_old_folders()
+
+print("Image processing, organization, and cleanup complete.")
