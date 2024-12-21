@@ -29,4 +29,4 @@ jobs:
 
       # Step 4: Run the Python script
       - name: Run image processing script
-        run: python path/to/your/script.py
+        run: python cleanup/main.py
