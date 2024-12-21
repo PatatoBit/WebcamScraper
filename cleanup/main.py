@@ -15,7 +15,7 @@ aqi_categories = {
 
 # Source and destination folders
 source_folder = "screenshots"
-cleaned_folder = "cleanshot"
+cleaned_folder = "cleanshots"
 train_folder = os.path.join(cleaned_folder, "train")
 test_folder = os.path.join(cleaned_folder, "test")
 
