@@ -8,7 +8,7 @@ export interface LiveCam {
   lng: number;
 }
 
-export const EarthCamURLs: LiveCam[] = [
+const EarthCamURLs: LiveCam[] = [
   {
     name: "Dallas, Texas",
     url: "https://www.earthcam.com/usa/texas/dallas/reuniontower/?cam=reuniontower",
@@ -72,6 +72,27 @@ const SkylineWebcamsURLs: LiveCam[] = [
     url: "https://www.skylinewebcams.com/en/webcam/philippines/mimaropa/palawan/el-nido.html",
     lat: 11.181150970673162,
     lng: 119.39032911875917,
+  },
+];
+
+export const outdoorCamsURLs: LiveCam[] = [
+  {
+    url: "https://www.outdooractive.com/en/webcam/chennai-tamil-nadu-north-north-west/803016623/",
+    name: "Chennai, Tamil Nadu, India",
+    lat: 13.12524,
+    lng: 80.16037,
+  },
+  {
+    url: "https://www.outdooractive.com/en/webcam/mumbai/803767402/",
+    name: "Mumbai, Maharashtra, India",
+    lat: 19.01441,
+    lng: 72.84794,
+  },
+  {
+    url: "https://www.outdooractive.com/en/webcam/madiyur-north-east-chennai-tamil-nadu/803959592/",
+    name: "Madiyur, Chennai, Tamil Nadu, India",
+    lat: 13.28616,
+    lng: 80.24218,
   },
 ];
 
