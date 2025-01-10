@@ -7,7 +7,9 @@ import {
   getFormattedDateTime,
   getLocalTimeAndDayOrNight,
   getWeatherCondition,
+  sanitizeFileName,
 } from "./utils.js";
+import { fileURLToPath } from "url";
 
 configDotenv();
 const windyApiKey = process.env.WINDY_API_KEY;
@@ -16,6 +18,10 @@ const requestOptions = {
     "x-windy-api-key": windyApiKey,
   },
 };
+
+// Polyfill __dirname
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 async function getCountryCams(countryCode: string, limit = 10) {
   if (!windyApiKey) {
@@ -66,14 +72,18 @@ function formatWebcamData(webcamData: any): WindyData {
 }
 
 export async function captureWindyCams(countryCode: string, limit = 10) {
+  console.log("Finding windy cams for country code:", countryCode);
   const cams = await getCountryCams(countryCode, limit);
+
+  console.log("Retrieving each webcams id and location");
   const windyCams = cams.map(async (cam: any) => {
-    const data = await getWebcamData(cam.id);
-    return formatWebcamData(data.result.webcam);
+    const data = await getWebcamData(cam.webcamId);
+    return formatWebcamData(data);
   });
 
   const fetchedWindyCams = Promise.all(windyCams);
 
+  console.log("Fetching data for each webcam");
   const finalWindyData = await Promise.all(
     (
       await fetchedWindyCams
@@ -97,17 +107,26 @@ export async function captureWindyCams(countryCode: string, limit = 10) {
     })
   );
 
+  console.log("Saving images for each webcam");
   // Directory for storing screenshots
   const { date } = getFormattedDateTime();
-  const outputDir = path.join(__dirname, "..", "screenshots", date);
-  fs.mkdirSync(outputDir, { recursive: true });
+  const baseOutputDir = path.join(__dirname, "..", "screenshots", date);
 
-  // Save images to disk
+  // Process each webcam and save images in their own folder
   for (const cam of finalWindyData) {
     try {
-      const fileName = `${cam.localTime}_${cam.dayOrNight}_AQI${cam.aqi}_${cam.weatherCondition}_${cam.name}.jpg`;
-      const filePath = path.join(outputDir, fileName);
+      // Create a directory for the webcam's images
+      const webcamDir = path.join(
+        baseOutputDir,
+        cam.name.replace(/[^a-zA-Z0-9-_]/g, "_")
+      ); // Replace invalid characters
+      fs.mkdirSync(webcamDir, { recursive: true });
 
+      // Construct file name
+      const fileName = `${cam.localTime}_${cam.dayOrNight}_AQI${cam.aqi}_${cam.weatherCondition}.jpg`;
+      const filePath = path.join(webcamDir, fileName);
+
+      // Download and save the image
       const response = await axios.get(cam.imageUrl, {
         responseType: "stream",
       });
@@ -126,4 +145,5 @@ export async function captureWindyCams(countryCode: string, limit = 10) {
   }
 
   console.log("All images captured successfully.");
+  console.log("====================================");
 }

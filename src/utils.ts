@@ -87,3 +87,8 @@ export async function getWeatherCondition(
   const condition = data.weather[0].main; // e.g., "hazy", "cloudy", "foggy"
   return condition;
 }
+
+export function sanitizeFileName(fileName: string): string {
+  // Replace invalid characters with an underscore
+  return fileName.replace(/[/?<>\\:*"|<>]/g, "_").trim();
+}
