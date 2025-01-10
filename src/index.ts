@@ -1,6 +1,6 @@
 import { captureEarthcams } from "./earthCam.js";
 import { captureSkylineWebcams } from "./skylineWebcams.js";
-import { getCountryCams, getWebcamData } from "./windyCam.js";
+import { formatWebcamData, getCountryCams, getWebcamData } from "./windyCam.js";
 
 export interface LiveCam {
   name: string;
@@ -102,7 +102,7 @@ export const outdoorCamsURLs: LiveCam[] = [
 // });
 
 await getWebcamData(1245318606).then((data) => {
-  console.log(data);
+  console.log(formatWebcamData(data));
 });
 
 // await captureEarthcams(EarthCamURLs);

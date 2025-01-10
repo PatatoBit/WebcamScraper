@@ -40,3 +40,19 @@ export async function getWebcamData(webcamId: number) {
     return null;
   }
 }
+
+interface WindyData {
+  imageUrl: string;
+  name: string;
+  lat: number;
+  lng: number;
+}
+
+export function formatWebcamData(webcamData: any): WindyData {
+  return {
+    imageUrl: webcamData.images.current.preview,
+    name: webcamData.title,
+    lat: webcamData.location.latitude,
+    lng: webcamData.location.longitude,
+  };
+}
