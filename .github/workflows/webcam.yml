@@ -27,6 +27,7 @@ jobs:
         env:
           AQI_API_KEY: ${{ secrets.AQI_API_KEY }}
           WEATHER_API_KEY: ${{ secrets.WEATHER_API_KEY }}
+          WINDY_API_KEY: ${{ secrets.WINDY_API_KEY }}
         run: npx tsx src/index.ts
 
       - name: Commit and push screenshots
