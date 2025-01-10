@@ -7,7 +7,6 @@ import {
   getFormattedDateTime,
   getLocalTimeAndDayOrNight,
   getWeatherCondition,
-  sanitizeFileName,
 } from "./utils.js";
 import { fileURLToPath } from "url";
 
