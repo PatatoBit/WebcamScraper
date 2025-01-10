@@ -3,7 +3,7 @@ import { configDotenv } from "dotenv";
 
 configDotenv();
 
-export async function getCountryCams(countryCode: string) {
+export async function getCountryCams(countryCode: string, limit = 10) {
   const windyApiKey = process.env.WINDY_API_KEY;
 
   const requestOptions = {
@@ -16,7 +16,7 @@ export async function getCountryCams(countryCode: string) {
     throw new Error("Windy API key not found");
   }
 
-  const url = `https://api.windy.com/webcams/api/v3/webcams?lang=en&limit=10&offset=0&countries=${countryCode}`;
+  const url = `https://api.windy.com/webcams/api/v3/webcams?lang=en&limit=${limit}&offset=0&countries=${countryCode}`;
 
   try {
     const response = await axios.get(url, requestOptions);
