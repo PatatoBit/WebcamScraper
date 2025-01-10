@@ -1,0 +1,40 @@
+name: Capture Webcams
+
+on:
+  schedule:
+    - cron: "0 * * * *" # Runs every hour at the top of the hour
+  workflow_dispatch: # Allows manual triggering
+
+jobs:
+  capture_screenshots:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+
+      - name: Install dependencies
+        run: |
+          npm install
+          npm install puppeteer
+
+      - name: Run main script
+        env:
+          AQI_API_KEY: ${{ secrets.AQI_API_KEY }}
+          WEATHER_API_KEY: ${{ secrets.WEATHER_API_KEY }}
+          WINDY_API_KEY: ${{ secrets.WINDY_API_KEY }}
+        run: npx tsx src/index.ts
+
+      - name: Commit and push screenshots
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "actions@github.com"
+          git add screenshots/
+          git commit -m "Add webcam screenshots for $(date)"
+          git pull --ff-only
+          git push
