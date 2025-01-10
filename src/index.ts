@@ -43,12 +43,12 @@ const EarthCamURLs: LiveCam[] = [
 ];
 
 const SkylineWebcamsURLs: LiveCam[] = [
-  {
-    name: "Shanghai Tower, Shanghai",
-    url: "https://www.skylinewebcams.com/en/webcam/china/shanghai/shanghai/skyline-of-shanghai.html",
-    lat: 31.233710649810327,
-    lng: 121.50556972023557,
-  },
+  // {
+  //   name: "Shanghai Tower, Shanghai",
+  //   url: "https://www.skylinewebcams.com/en/webcam/china/shanghai/shanghai/skyline-of-shanghai.html",
+  //   lat: 31.233710649810327,
+  //   lng: 121.50556972023557,
+  // },
   {
     name: "Qingdao, China",
     url: "https://www.skylinewebcams.com/en/webcam/china/shandong/qingdao/qingdao.html",
