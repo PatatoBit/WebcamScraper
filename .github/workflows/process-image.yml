@@ -1,21 +1,25 @@
-name: Cleanup and Process Image
-
+name: Process Images
 on:
   workflow_run:
     workflows: ["Capture Webcams"]
     types:
       - completed
-  workflow_dispatch: # Allows manual triggering
-
+  workflow_dispatch:
 jobs:
   process_images:
-    runs-on: ubuntu-22.04
-
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: Checkout main branch
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: main
+
+      - name: Checkout output branch
+        uses: actions/checkout@v4
         with:
           ref: output
+          path: output
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -28,13 +32,15 @@ jobs:
           pip install opencv-python scikit-learn
 
       - name: Run image processing script
-        run: python cleanup/main.py
+        run: |
+          cd main
+          python cleanup/main.py ../output/screenshots ../output/cleanshot
 
       - name: Commit and push changes
         run: |
+          cd output
           git config --global user.name "GitHub Actions Bot"
           git config --global user.email "actions@github.com"
-          git pull origin output
-          git add cleanshots/
-          git commit -m "Processed images for $(date +%Y-%m-%d_%H-%M-%S)"
+          git add cleanshot/
+          git commit -m "Processed images and cleaned data for $(date)" || echo "No changes to commit"
           git push origin output
