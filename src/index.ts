@@ -97,6 +97,6 @@ export const outdoorCamsURLs: LiveCam[] = [
   },
 ];
 
-await captureWindyCams("IN,TH,CN", 50);
+await captureWindyCams("IN,TH,CN,AU", 50);
 await captureEarthcams(EarthCamURLs);
 await captureSkylineWebcams(SkylineWebcamsURLs);
