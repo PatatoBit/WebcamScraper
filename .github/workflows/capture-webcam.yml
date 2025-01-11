@@ -34,7 +34,8 @@ jobs:
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "actions@github.com"
+          git fetch
+          git checkout -B images  # Create or switch to `images` branch
           git add screenshots/
           git commit -m "Add webcam screenshots for $(date)"
-          git pull --ff-only
-          git push
+          git push origin output --force
