@@ -38,7 +38,7 @@ jobs:
           git checkout -B output
           git add screenshots/
           git commit -m "Add webcam screenshots for $(date)"
-          git push origin output --force
+          git push origin output
 
   process_images:
     runs-on: ubuntu-latest
@@ -70,4 +70,4 @@ jobs:
           git pull
           git add cleanshots/
           git commit -m "Processed images and cleaned data for $(date)"
-          git push origin output --force
+          git push origin output
