@@ -1,14 +1,17 @@
 name: Capture Webcams
+
 on:
-  workflow_dispatch:
+  schedule:
+    - cron: "0 * * * *" # Runs every hour at the top of the hour
+  workflow_dispatch: # Allows manual triggering
+
 jobs:
   capture_screenshots:
     runs-on: ubuntu-22.04
+
     steps:
-      - name: Checkout main branch
+      - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          ref: main
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -27,28 +30,11 @@ jobs:
           WINDY_API_KEY: ${{ secrets.WINDY_API_KEY }}
         run: npx tsx src/index.ts
 
-      - name: Save screenshots to temporary directory
+      - name: Commit and push screenshots
         run: |
-          mkdir -p /tmp/new-screenshots
-          cp -r screenshots/* /tmp/new-screenshots/ || true
-
-      - name: Switch to output branch
-        run: |
-          git add .
-          git stash
-          git fetch origin output
-          git checkout output
           git config --global user.name "github-actions"
           git config --global user.email "actions@github.com"
-
-      - name: Copy and commit new screenshots
-        run: |
-          # Create screenshots directory if it doesn't exist
-          mkdir -p screenshots
-
-          # Copy new screenshots while preserving existing ones
-          cp -n /tmp/new-screenshots/* screenshots/ 2>/dev/null || true
-
           git add screenshots/
-          git commit -m "Add webcam screenshots for $(date)" || echo "No changes to commit"
-          git push origin output
+          git commit -m "Add webcam screenshots for $(date)"
+          git pull --ff-only
+          git push
