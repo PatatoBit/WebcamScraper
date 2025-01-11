@@ -10,6 +10,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          ref: output
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -34,6 +36,7 @@ jobs:
           git config --global user.email "actions@github.com"
           git fetch
           git checkout -B output
+          git pull origin output
           git add screenshots/
-          git commit -m "Add webcam screenshots for $(date)"
-          git push origin output --force
+          git commit -m "Add webcam screenshots for $(date +%Y-%m-%d_%H-%M-%S)"
+          git push origin output
