@@ -34,7 +34,7 @@ jobs:
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "actions@github.com"
-          git fetch
+          git pull
           git checkout -B output
           git add screenshots/
           git commit -m "Add webcam screenshots for $(date)"
@@ -67,6 +67,7 @@ jobs:
         run: |
           git config --global user.name "GitHub Actions Bot"
           git config --global user.email "actions@github.com"
-          git add cleanshot/
+          git pull
+          git add cleanshots/
           git commit -m "Processed images and cleaned data for $(date)"
           git push origin output --force
